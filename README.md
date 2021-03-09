@@ -10,12 +10,20 @@ Copy the Qt.py file to your maya scripts folder.
 
 Authors: David Graham (inspired by the super helpful Udemy course by Dhruv Govil)
 
-Please contact me with problems/suggestions:
-daveograham@protonmail.com
-
 This project is licensed under the terms of the MIT license
 
 
+INSTALLATION:
+Copy the entire Animina folder to your Maya scripts folder e.g.  ../2020/scripts
+Copy Qt.py to the scripts folder
+
+Run these two lines in the script editor or add to a custom shelf button:
+
+from animina import animinaUI
+animinaUI.SelectionUI()
+
+
+CHANGE LOG:
 New in v0.94 - A help dialog! The UI has been rearranged a little to include a help button which explains the useage of the save/load/create buttons
 
 New in v0.93 - Restoring a save now checks if objects have been deleted in the outliner and removes them from the groups
@@ -40,13 +48,3 @@ New in v0.8 - Screenshots now use isolate mode
 	    - Screenshot files are delete when clearing a selection group
 
 New in v0.7 - Now with screenshots!
-
-
-INSTALLATION:
-Copy the entire Animina folder to your Maya scripts folder e.g.  ../2020/scripts
-Copy Qt.py to the scripts folder
-
-Run these two lines in the script editor or add to a custom shelf button:
-
-from animina import animinaUI
-animinaUI.SelectionUI()
