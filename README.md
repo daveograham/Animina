@@ -20,9 +20,13 @@ Copy Qt.py to the scripts folder
 
 Run these two lines in the script editor or add to a custom shelf button:
 
+--------------------------------
+
 from animina import animinaUI
+
 animinaUI.SelectionUI()
 
+--------------------------------
 
 CHANGE LOG:
 New in v0.94 - A help dialog! The UI has been rearranged a little to include a help button which explains the useage of the save/load/create buttons
