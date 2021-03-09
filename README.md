@@ -14,9 +14,9 @@ This project is licensed under the terms of the MIT license
 
 
 INSTALLATION:
-Copy the entire Animina folder to your Maya scripts folder e.g.  ../2020/scripts
+Copy the entire Animina folder to your Maya scripts folder e.g.  ../20xx/scripts
 
-Copy Qt.py to the scripts folder
+Copy Qt.py to the ../20xx/scripts folder
 
 Run these two lines in the script editor or add to a custom shelf button:
 
