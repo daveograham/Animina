@@ -353,13 +353,19 @@ class SelectionUI(QtWidgets.QWidget):
             cmds.warning("No groups created yet!")
             return
 
+        #get current scene file
+        sceneFile = cmds.file(query=True, sceneName=True)
+
         if not filename.strip():
             #cmds.warning("Use the create field to enter a filename")
             self.library.writeSave(fname='default')
         else:
             self.library.writeSave(fname=filename)
 
+        #ensure the original file name is still in memory
+        cmds.file(rename=sceneFile)
         self.createNameField.clear()
+
 
     def loadFile(self):
 
