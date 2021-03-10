@@ -70,7 +70,7 @@ class SelectionLibrary(dict):
 
         infoFile = os.path.join(iconDIR, '%s.json' % filename)
         
-        cmds.file(rename = infoFile)
+        #cmds.file(rename = infoFile)
         
         currentKeys = self.keys()
         for f in currentKeys:
@@ -91,9 +91,7 @@ class SelectionLibrary(dict):
         sys.stdout.write(outputline)
 
     def find(self, directory=LIBDIR):
-        
-        #print 'I am finding things'
-        
+
         if not os.path.exists(directory):
             return
         
@@ -142,16 +140,9 @@ class SelectionLibrary(dict):
         #put the images back in the working library
         for key in keys:
             screenFile = self[key]['path']
-
             newFile = os.path.join(LIBDIR, '%s.jpg' % key)
-
             copyfile(screenFile, newFile)
 
-    def load(self, name):
-        path = self[name]['path']
-        #python wont allow import command so use maya shortform i
-        cmds.file(path, i=True, usingNamespaces=False)
-        
     def saveScreenshot(self, name, directory=LIBDIR):
         path = os.path.join(directory, '%s.jpg' % name)
         

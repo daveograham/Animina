@@ -38,6 +38,9 @@ LIBDIR = os.path.join(USERAPPDIR, 'animinaLibrary')
 SCRIPTDIR = cmds.internalVar(userScriptDir=True)
 ANIMADIR = os.path.join(SCRIPTDIR,'animina')
 
+#current project directory
+PWD = cmds.workspace(query=True, directory=True)
+
 print 'USERAPPDIR', USERAPPDIR
 print 'LIBDIR', LIBDIR
 print 'SCRIPTDIR,', SCRIPTDIR
@@ -353,27 +356,36 @@ class SelectionUI(QtWidgets.QWidget):
             cmds.warning("No groups created yet!")
             return
 
-        #get current scene file
-        sceneFile = cmds.file(query=True, sceneName=True)
-
         if not filename.strip():
             #cmds.warning("Use the create field to enter a filename")
             self.library.writeSave(fname='default')
         else:
             self.library.writeSave(fname=filename)
 
-        #ensure the original file name is still in memory
-        cmds.file(rename=sceneFile)
         self.createNameField.clear()
 
-
     def loadFile(self):
-
         filename = self.createNameField.text()
         if not filename.strip():
-            self.library.loadSave(fname='default')
+            defaultDIR = os.path.join(PWD, 'animina/default')
+
+            if not os.path.exists(defaultDIR):
+                cmds.warning("No default save folder exists yet")
+            else:
+                self.library.clear()
+                self.listWidget.clear()
+                self.library.loadSave(fname='default')
+
         else:
-            self.library.loadSave(fname=filename)
+            saveDIR = os.path.join(PWD, 'animina/')
+            saveDIR = os.path.join(saveDIR, filename)
+            if not os.path.exists(saveDIR):
+                fwarning = "Save folder <"+filename+"> does not exist yet"
+                cmds.warning(fwarning)
+            else:
+                self.library.clear()
+                self.listWidget.clear()
+                self.library.loadSave(fname=filename)
         
         #print self.library.keys()
         self.createNameField.clear()
@@ -420,3 +432,4 @@ class SelectionUI(QtWidgets.QWidget):
 
         cmds.select(clear=True)
         cmds.select(loadobjects)
+        cmds.setFocus("MayaWindow")
