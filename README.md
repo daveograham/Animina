@@ -46,7 +46,7 @@ animinaUI.SelectionUI()
 
 CHANGE LOG:
 
-New in v0.95 - Fixed a bug where saving a selection to disc would change the current Maya scenefile name. Loading also now clears the current selections in the GUI.
+New in v0.95 - Fixed a bug where saving a selection to disc would change the current Maya scenefile name. Loading also now replaces the current selections in the animina window.
 
 New in v0.94 - A help dialog! The UI has been rearranged a little to include a help button which explains the useage of the save/load/create buttons
 
