@@ -14,14 +14,13 @@ Animation: Can you never find that pesky tounge controller buried in the mesh? S
 
 
 ------------------
+Authors: David Graham (inspired by the super helpful Udemy course by Dhruv Govil)
 
 Health warnings: Many, this is a work in progress. Currently tested on Maya 2019 & 2020, Mac and Windows.
 		 Creates a folder called animinaLibrary in your maya directory. This is needed to save screenshots.
 
 Requires the QtPy wrapper by Mottosso https://github.com/mottosso/Qt.py (please check its own license requirements)
 Follow the link and download the Qt.py file. Then copy to your maya scripts folder.
-
-Authors: David Graham (inspired by the super helpful Udemy course by Dhruv Govil)
 
 This project is licensed under the terms of the MIT license
 
@@ -30,7 +29,7 @@ This project is licensed under the terms of the MIT license
 INSTALLATION:
 Copy the entire Animina folder to your Maya scripts folder e.g.  ../20xx/scripts
 
-Copy Qt.py to the ../20xx/scripts folder
+Copy the Qt.py file (from https://github.com/mottosso/Qt.py) to the ../20xx/scripts folder
 
 Your folder should look like this:
 
