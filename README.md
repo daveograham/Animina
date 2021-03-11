@@ -22,7 +22,7 @@ Your folder should look like this:
 
 ../scripts/Qt.py
 
-../scripts/animina/__init__.py
+../scripts/animina/__ init__.py
 
 ../scripts/animina/animinaUI.py
 
