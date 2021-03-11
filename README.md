@@ -21,10 +21,15 @@ Copy Qt.py to the ../20xx/scripts folder
 Your folder should look like this:
 
 ../scripts/Qt.py
+
 ../scripts/animina/__init__.py
+
 ../scripts/animina/animinaUI.py
+
 ../scripts/animina/animinaLibrary.py
+
 ../scripts/animina/helpDialog.py
+
 ../scripts/animina/Animina_small.jpg
 
 
