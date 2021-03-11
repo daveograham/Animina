@@ -12,6 +12,7 @@ Authors: David Graham (inspired by the super helpful Udemy course by Dhruv Govil
 
 This project is licensed under the terms of the MIT license
 
+-----------------------------------------------------------
 
 INSTALLATION:
 Copy the entire Animina folder to your Maya scripts folder e.g.  ../20xx/scripts
