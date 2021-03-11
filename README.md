@@ -1,12 +1,12 @@
 Welcome to Animina v0.95!
 
-This is a selection tool for any maya user. It will help you create, store, and recall selections from the outliner to speed up your workflow.
+This is a selection tool for any maya user. It will help you create, store, and recall complex selections from the outliner or viewport to speed up your workflow.
 
 Health warnings: Many, this is a work in progress. Currently tested on Maya 2019 & 2020, Mac and Windows.
 		 Creates a folder called animinaLibrary in your maya directory. This is needed to save screenshots.
 
 Requires the QtPy wrapper by Mottosso https://github.com/mottosso/Qt.py (please check its own license requirements)
-Copy the Qt.py file to your maya scripts folder.
+Follow the link and download the Qt.py file. Then copy to your maya scripts folder.
 
 Authors: David Graham (inspired by the super helpful Udemy course by Dhruv Govil)
 
@@ -18,7 +18,17 @@ Copy the entire Animina folder to your Maya scripts folder e.g.  ../20xx/scripts
 
 Copy Qt.py to the ../20xx/scripts folder
 
-Run these two lines in the script editor or add to a custom shelf button:
+Your folder should look like this:
+
+../scripts/Qt.py
+../scripts/animina/__init__.py
+../scripts/animina/animinaUI.py
+../scripts/animina/animinaLibrary.py
+../scripts/animina/helpDialog.py
+../scripts/animina/Animina_small.jpg
+
+
+In Maya, run these two lines in the script editor or add to a custom shelf button:
 
 --------------------------------
 
