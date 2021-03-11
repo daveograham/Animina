@@ -2,6 +2,19 @@ Welcome to Animina v0.95!
 
 This is a selection tool for any maya user. It will help you create, store, and recall complex selections from the outliner or viewport to speed up your workflow.
 
+----------------------
+
+Tips:
+
+The widget is dockable and supports multiple selections using cmd/ctrl or shift clicks
+
+A rigging example: select an entire joint chain from the outliner, enter a name in the Animina window and store the selection using the create button. Next select a model skin and store in the same way. You can now ctrl click both icons in the Animina window to quickly recall the selection to bind the skin.
+
+Animation: Can you never find that pesky tounge controller buried in the mesh? Select it one time from the outliner, add to the Animina window and keep the window open while animating.
+
+
+------------------
+
 Health warnings: Many, this is a work in progress. Currently tested on Maya 2019 & 2020, Mac and Windows.
 		 Creates a folder called animinaLibrary in your maya directory. This is needed to save screenshots.
 
@@ -43,6 +56,7 @@ from animina import animinaUI
 animinaUI.SelectionUI()
 
 --------------------------------
+
 
 CHANGE LOG:
 
