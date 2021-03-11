@@ -10,7 +10,7 @@ The widget is dockable and supports multiple selections using cmd/ctrl or shift 
 
 A rigging example: select an entire joint chain from the outliner, enter a name in the Animina window and store the selection using the create button. Next select a model skin and store in the same way. You can now ctrl click both icons in the Animina window to quickly recall the selection to bind the skin.
 
-Animation: Can you never find that pesky tounge controller buried in the mesh? Select it one time from the outliner, add to the Animina window and keep the window open while animating.
+Animation: Can you never find that pesky tounge controller buried in the mesh? Select it one time from the outliner, add to the Animina window and keep it open while animating.
 
 
 ------------------
