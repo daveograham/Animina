@@ -4,9 +4,8 @@ This is a selection tool for any maya user. It will help you create, store, and 
 
 <img src="https://github.com/daveograham/Animina/blob/main/animinaex.png" width="660" height="500">
 
-----------------------
-
-----------------------
+--------------------
+--------------------
 Tips:
 
 The widget is dockable and supports multiple selections using cmd/ctrl or shift clicks
