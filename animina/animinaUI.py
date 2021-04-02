@@ -8,17 +8,17 @@ from shiboken2 import wrapInstance
 from maya import OpenMayaUI as omui
 
 from animina import animinaLibrary
-#reload(animinaLibrary)
+# reload(animinaLibrary)
 
 from animina import helpDialog
-#reload(helpDialog)
+# reload(helpDialog)
 
-#function to get maya main window pointer
+# function to get maya main window pointer
 def getMayaMainWindow():
     win = omui.MQtUtil_mainWindow()
     ptr = wrapInstance(long(win), QtWidgets.QMainWindow)
     return ptr
-    #returns the pointer to main window
+    # returns the pointer to main window
     
 def getDock(name='AniminaDock'):
     deleteDock(name)
@@ -26,19 +26,19 @@ def getDock(name='AniminaDock'):
     qtCtrl = omui.MQtUtil_findControl(ctrl)
     ptr = wrapInstance(long(qtCtrl), QtWidgets.QWidget)
     return ptr
-    #returns the pointer to the dock
+    # returns the pointer to the dock
 
 def deleteDock(name='AniminaDock'):
     if cmds.workspaceControl(name, query=True, exists=True):
         cmds.deleteUI(name)
 
-#paths
+# paths
 USERAPPDIR = cmds.internalVar(userAppDir=True)
 LIBDIR = os.path.join(USERAPPDIR, 'animinaLibrary')
 SCRIPTDIR = cmds.internalVar(userScriptDir=True)
 ANIMADIR = os.path.join(SCRIPTDIR,'animina')
 
-#current project directory
+# current project directory
 PWD = cmds.workspace(query=True, directory=True)
 
 print 'USERAPPDIR', USERAPPDIR
@@ -48,17 +48,17 @@ print 'ANIMADIR ', ANIMADIR
 
 SCREENSHOTDEF = os.path.join(ANIMADIR, 'Animina_small')
 
-#this is the main UI class
+# this is the main UI class
 class SelectionUI(QtWidgets.QWidget):
 
     def __init__(self, dock=True):
         if dock:
             parent = getDock()
         else:
-            #remove original dock and create dialog UI under the maya main window
+            # remove original dock and create dialog UI under the maya main window
             deleteDock()
 
-            #delete if it already exists
+            # delete if it already exists
             try:
                 cmds.deleteUI('animinaName')
             except:
@@ -74,16 +74,16 @@ class SelectionUI(QtWidgets.QWidget):
         self.library = animinaLibrary.SelectionLibrary()
         self.buildUI()
         
-        #add this widget to parent, query the parent using parent() and find layout()
+        # add this widget to parent, query the parent using parent() and find layout()
         self.parent().layout().addWidget(self)
-        #show QDiaolog if the dock doesnt exist
+        # show QDialog if the dock doesnt exist
         if not dock:
             parent.show()
 
     def buildUI(self):
         layout = QtWidgets.QVBoxLayout(self)
 
-        #help layout widget ==========
+        # help layout widget ==========
         labWidget = QtWidgets.QWidget()
         labLayout = QtWidgets.QHBoxLayout(labWidget)
         layout.addWidget(labWidget)
@@ -96,8 +96,8 @@ class SelectionUI(QtWidgets.QWidget):
         label.setText('Enter a selection group name or a save directory:')
         layout.addWidget(label)
 
-        #create field and button ==================================
-        #child horizontal layout
+        # create field and button ==================================
+        # child horizontal layout
         createWidget = QtWidgets.QWidget()
         layout.addWidget(createWidget)
 
@@ -109,28 +109,28 @@ class SelectionUI(QtWidgets.QWidget):
         createBtn.clicked.connect(self.createGroup)
         createLayout.addWidget(createBtn)
 
-        #==== start List widget ======
+        # ==== start List widget ======
         size = 72
         buffer = 12
-        #list widget - creates a grid list widget to display the selection thumbnails
+        # list widget - creates a grid list widget to display the selection thumbnails
         self.listWidget  = QtWidgets.QListWidget()
         
-        #test multi selection
+        # test multi selection
         self.listWidget.setSelectionMode(QtWidgets.QListWidget.ExtendedSelection)
 
-        #use icon mode in the list widget
+        # use icon mode in the list widget
         self.listWidget.setViewMode(QtWidgets.QListWidget.IconMode)
         self.listWidget.setIconSize(QtCore.QSize(size,size))
-        ###
+
         self.listWidget.setResizeMode(QtWidgets.QListWidget.Adjust)
         self.listWidget.setGridSize(QtCore.QSize(size+buffer, size+buffer))
         layout.addWidget(self.listWidget)
 
-        #list behaviour (needs a toggle) EXPERIMENT
-        #loads selection on click of an icon V0.9+ this is now standard
+        # list behaviour (needs a toggle) EXPERIMENT
+        # loads selection on click of an icon V0.9+ this is now standard
         self.listWidget.clicked.connect(self.load)
 
-        #buttons - first row ====================================
+        # buttons - first row ====================================
         btnWidget = QtWidgets.QWidget()
         btnLayout = QtWidgets.QHBoxLayout(btnWidget)
         layout.addWidget(btnWidget)
@@ -182,12 +182,12 @@ class SelectionUI(QtWidgets.QWidget):
             print("Closed help!")
 
     def saveScreenshot(self, name='Screen', directory=LIBDIR):
-        #creates dir if it doesnt exist
+        # creates dir if it doesnt exist
         if not os.path.exists(directory):
             os.mkdir(directory)
             print 'Created LIBDIR at ', LIBDIR
         
-        #check if anything is in the selection memory
+        # check if anything is in the selection memory
         if not self.library.currentSelection:
             print 'nothing in selection'
             return
@@ -196,23 +196,23 @@ class SelectionUI(QtWidgets.QWidget):
 
         path = os.path.join(directory, '%s.jpg' % currentKey)
 
-        #isolate the object
+        # isolate the object
         panels = cmds.playblast(activeEditor=True)
 
-        #check for joints and turn off Local joint axis display
+        # check for joints and turn off Local joint axis display
         currentObjects = self.library[currentKey]['selection']
         
         flag = []
         for obj in currentObjects:
             if cmds.objectType(obj) == 'joint' and cmds.getAttr(obj+'.displayLocalAxis') == True:
-                #check the children of this joint
+                # check the children of this joint
                 relatives = cmds.listRelatives(obj, allDescendents=True, type='joint')
                 flag.append(obj)
                 if relatives:
                     flag.extend(relatives)
         
         if flag:
-            #print flag
+            # print flag
             for obj in flag:
                 cmds.setAttr(obj+'.displayLocalAxis', False)
 
@@ -229,16 +229,18 @@ class SelectionUI(QtWidgets.QWidget):
 
         cmds.viewFit()
         cmds.setAttr('defaultRenderGlobals.imageFormat',8)
-        cmds.playblast(completeFilename=path, forceOverwrite=True, format='image', width=600, height=600, showOrnaments=False, startTime=1, endTime=1, viewer=False)
+        currentTime = cmds.currentTime(query=True)
 
-        #turn off isolation
+        cmds.playblast(completeFilename=path, forceOverwrite=True, format='image', width=600, height=600, showOrnaments=False, startTime=currentTime, endTime=currentTime, viewer=False)
+
+        # turn off isolation
         cmds.isolateSelect(activePanel,state=False)            
-        #turn back on any local rotation axis
+        # turn back on any local rotation axis
         if flag:
             for obj in flag:
                 cmds.setAttr(obj+'.displayLocalAxis', True)
 
-        #reset view
+        # reset view
         cmds.cameraView(homeView, camera='persp', e=True, setCamera=True)
         cmds.selectPref(selectionChildHighlightMode=highlightMode)
 
@@ -246,15 +248,15 @@ class SelectionUI(QtWidgets.QWidget):
 
     def createGroup(self):
         
-        #check if you have a selection
+        # check if you have a selection
         if not cmds.ls(selection=True):
             cmds.warning("You need a selection!")
             return
 
-        #take the user input in the name field
+        # take the user input in the name field
         selectionName = self.createNameField.text()
 
-        #check if you have a name
+        # check if you have a name
         if not selectionName.strip():
             cmds.warning("You must give a name!")
             return
@@ -263,22 +265,22 @@ class SelectionUI(QtWidgets.QWidget):
             cmds.warning("Name already exists!")
             return
 
-        #pass this name to the selection manager...
+        # pass this name to the selection manager...
         self.library.storeSelection(selectionName)
-        #and the temporary current selection variable
+        # and the temporary current selection variable
         self.library.currentSelection = selectionName
 
-        #add widget with new selection group name
+        # add widget with new selection group name
         item = QtWidgets.QListWidgetItem(selectionName)
         self.listWidget.addItem(item)
         self.createNameField.clear()
         self.saveScreenshot()
 
     def populate(self):
-        #clear list widget and repopulate
+        # clear list widget and repopulate
         self.listWidget.clear()
 
-        #find screenfiles in library
+        # find screenfiles in library
         self.library.find()
 
         for key in self.library.keys():
@@ -306,13 +308,13 @@ class SelectionUI(QtWidgets.QWidget):
         selectedItems = [tag for tag in self.listWidget.selectedItems()]
 
         for item in selectedItems:
-            #get the selection from the key
+            # get the selection from the key
             key = item.text()
             selectionList = self.library[key]['selection']
             visHome = self.library[key]['visibility']
-            #print visHome
+            # print visHome
 
-            #list to store original vis state
+            # list to store original vis state
             if self.library[key]['vistoggle'] == False:
                 for i, object in enumerate(selectionList):
                     cmds.setAttr(object+'.visibility',False)
@@ -325,7 +327,7 @@ class SelectionUI(QtWidgets.QWidget):
     def deleteGroup(self):
                
         if self.library.keys():
-            #get current selected group from widget
+            # get current selected group from widget
                        
             currentItem = self.listWidget.currentItem()
             if not currentItem:
@@ -335,16 +337,16 @@ class SelectionUI(QtWidgets.QWidget):
 
             for item in selectedItems:
                 toClear = item.text()
-                #print self.library[toClear].keys()
-                #remove widget from UI
-                #returns noKey if the key doesnt exist
+                # print self.library[toClear].keys()
+                # remove widget from UI
+                # returns noKey if the key doesnt exist
             
-                #check and remove attached screenshot
+                # check and remove attached screenshot
                 if 'path' in self.library[toClear].keys():
                     spath = os.path.join(LIBDIR, '%s.jpg' % toClear)
                     os.remove(spath)
 
-                #remove entry from dictionary
+                # remove entry from dictionary
                 deleted = self.library.pop(toClear,'noKey')
 
             self.populate()
@@ -357,7 +359,7 @@ class SelectionUI(QtWidgets.QWidget):
             return
 
         if not filename.strip():
-            #cmds.warning("Use the create field to enter a filename")
+            # cmds.warning("Use the create field to enter a filename")
             self.library.writeSave(fname='default')
         else:
             self.library.writeSave(fname=filename)
@@ -387,7 +389,7 @@ class SelectionUI(QtWidgets.QWidget):
                 self.listWidget.clear()
                 self.library.loadSave(fname=filename)
         
-        #print self.library.keys()
+        # print self.library.keys()
         self.createNameField.clear()
         self.populate()
 
@@ -406,22 +408,21 @@ class SelectionUI(QtWidgets.QWidget):
             iconText = item.text()
             names.append(iconText)
          
-        #get current selection from listwidget and add to maya selection
+        # get current selection from listwidget and add to maya selection
         storedSelection = []
         for key in names:
             getsel = self.library[key]['selection']
             storedSelection.extend(getsel)
 
-        #print storedSelection
         self.currentSelection = storedSelection
 
     def load(self):
-        #loads widget selection into maya active selection
+        # loads widget selection into maya active selection
         self.checkSelected()
 
         loadobjects = self.currentSelection
 
-        #check the objects exist in the scene
+        # check the objects exist in the scene
         outliner = cmds.ls(dagObjects=True)
 
         for obj in loadobjects:
