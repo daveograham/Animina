@@ -1,4 +1,4 @@
-Welcome to Animina v0.95!
+Welcome to Animina v0.96!
 
 This is a selection tool for any maya user. It will help you create, store, and recall complex selections from the outliner or viewport to speed up your workflow.
 
@@ -60,6 +60,8 @@ animinaUI.SelectionUI()
 
 
 CHANGE LOG:
+
+New in v0.96 - Creating an object and saving the screenshot no longer returns the current frame to 1.
 
 New in v0.95 - Fixed a bug where saving a selection to disc would change the current Maya scenefile name. Loading also now replaces the current selections in the animina window.
 
