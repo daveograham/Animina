@@ -62,6 +62,7 @@ animinaUI.SelectionUI()
 CHANGE LOG:
 
 New in v0.96 - Creating an object and saving the screenshot no longer returns the current frame to 1.
+	       Object creation and file saving are no longer case sensitive.
 
 New in v0.95 - Fixed a bug where saving a selection to disc would change the current Maya scenefile name. Loading also now replaces the current selections in the animina window.
 
