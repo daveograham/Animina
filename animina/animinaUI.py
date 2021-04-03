@@ -13,13 +13,14 @@ from animina import animinaLibrary
 from animina import helpDialog
 # reload(helpDialog)
 
+
 # function to get maya main window pointer
 def getMayaMainWindow():
     win = omui.MQtUtil_mainWindow()
     ptr = wrapInstance(long(win), QtWidgets.QMainWindow)
     return ptr
     # returns the pointer to main window
-    
+
 def getDock(name='AniminaDock'):
     deleteDock(name)
     ctrl = cmds.workspaceControl(name, label='Animina UI')
@@ -27,6 +28,7 @@ def getDock(name='AniminaDock'):
     ptr = wrapInstance(long(qtCtrl), QtWidgets.QWidget)
     return ptr
     # returns the pointer to the dock
+
 
 def deleteDock(name='AniminaDock'):
     if cmds.workspaceControl(name, query=True, exists=True):
@@ -135,37 +137,37 @@ class SelectionUI(QtWidgets.QWidget):
         btnLayout = QtWidgets.QHBoxLayout(btnWidget)
         layout.addWidget(btnWidget)
         
-        #visibility button
+        # visibility button
         visBtn = QtWidgets.QPushButton('Visibility')
         visBtn.clicked.connect(self.hideGroups)
         btnLayout.addWidget(visBtn)
 
-        #reresh button
+        # reresh button
         refreshBtn = QtWidgets.QPushButton('Refresh')
         refreshBtn.clicked.connect(self.populate)
         btnLayout.addWidget(refreshBtn)
         
-        #delete space button
+        # delete space button
         deleteBtn = QtWidgets.QPushButton('Delete')
         deleteBtn.clicked.connect(self.deleteGroup)
         btnLayout.addWidget(deleteBtn)
         
-        #second row buttons =======================================
+        # second row buttons =======================================
         btnWidget2 = QtWidgets.QWidget()
         btnLayout2 = QtWidgets.QHBoxLayout(btnWidget2)
         layout.addWidget(btnWidget2)
 
-        #save to file
+        # save to file
         saveBtn = QtWidgets.QPushButton('Save')
         saveBtn.clicked.connect(self.saveFile)
         btnLayout2.addWidget(saveBtn)
 
-        #load from file
+        # load from file
         loadBtn = QtWidgets.QPushButton('Load')
         loadBtn.clicked.connect(self.loadFile)
         btnLayout2.addWidget(loadBtn)
 
-        #connect close button signal to the close method in the QDialog
+        # connect close button signal to the close method in the QDialog
         closeBtn = QtWidgets.QPushButton('Close')
         closeBtn.clicked.connect(self.closeAnimina)
         btnLayout2.addWidget(closeBtn)
@@ -228,7 +230,7 @@ class SelectionUI(QtWidgets.QWidget):
         cmds.selectPref(selectionChildHighlightMode=1)
 
         cmds.viewFit()
-        cmds.setAttr('defaultRenderGlobals.imageFormat',8)
+        cmds.setAttr('defaultRenderGlobals.imageFormat', 8)
         currentTime = cmds.currentTime(query=True)
 
         cmds.playblast(completeFilename=path, forceOverwrite=True, format='image', width=600, height=600, showOrnaments=False, startTime=currentTime, endTime=currentTime, viewer=False)
@@ -260,8 +262,12 @@ class SelectionUI(QtWidgets.QWidget):
         if not selectionName.strip():
             cmds.warning("You must give a name!")
             return
-       
-        if selectionName in self.library.keys():
+
+        # check if name exists already ignoring case
+        keyslow = [i.lower() for i in self.library.keys()]
+
+        # if selectionName in self.library.keys():
+        if selectionName.lower() in keyslow:
             cmds.warning("Name already exists!")
             return
 
@@ -323,7 +329,7 @@ class SelectionUI(QtWidgets.QWidget):
                 for i, object in enumerate(selectionList):
                     cmds.setAttr(object+'.visibility',visHome[i])
                     self.library[key]['vistoggle'] = False
-            
+
     def deleteGroup(self):
                
         if self.library.keys():
@@ -353,6 +359,8 @@ class SelectionUI(QtWidgets.QWidget):
 
     def saveFile(self):
         filename = self.createNameField.text()
+        # only use lowercase filenames
+        filename = filename.lower()
 
         if not self.library.keys():
             cmds.warning("No groups created yet!")
@@ -368,6 +376,9 @@ class SelectionUI(QtWidgets.QWidget):
 
     def loadFile(self):
         filename = self.createNameField.text()
+        # only use lowercase filenames
+        filename = filename.lower()
+
         if not filename.strip():
             defaultDIR = os.path.join(PWD, 'animina/default')
 
